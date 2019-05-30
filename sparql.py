@@ -25,9 +25,5 @@ if __name__ == "__main__":
     cities = [el['citylabel']['value'].split(', ')[0] for el in jsn]
     cities.sort()
 
-<<<<<<< HEAD
     with open('gazetteers/cities.lst', 'w', encoding='utf-8') as f:
-=======
-    with open('gazetteers.lst', 'w', encoding='utf-8') as f:
->>>>>>> 7f633beb9fce52c9a947c34cdc9a9c48c5a8f4a3
         f.write('\n'.join(cities))
