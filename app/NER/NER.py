@@ -1,6 +1,7 @@
 from app.preprocessing import preproc
 from app import gazetteer
 
+
 def isloc(raw, ind, sent, lemma, pos):
 
     for name in gazetteer:
