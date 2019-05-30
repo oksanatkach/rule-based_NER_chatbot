@@ -11,63 +11,21 @@ def is_gazetteer(cand):
 
 def spacy_cand(parsed):
     candidates = []
-<<<<<<< HEAD
-=======
-    for sent in parsed.sents:
-        for entity in sent.ents:
-            if entity.label_ == 'GPE':
-                candidates.append(entity)
->>>>>>> 7f633beb9fce52c9a947c34cdc9a9c48c5a8f4a3
     return candidates
 
 
 def rules_cand(sent):
     candidates = []
-<<<<<<< HEAD
-=======
-
-    def compound_recursion(sent, init_ind, ind):
-        token = sent[ind]
-        if token.pos_ == 'PROPN' and token.dep_ in ['pobj', 'appos']:
-            return sent[init_ind:ind+1]
-        elif token.pos_ == 'PROPN' and token.dep_ == 'compound':
-            return compound_recursion(sent,  init_ind, ind+1)
-
-    ind = 0
-    while ind < len(sent):
-        token = sent[ind]
-        if token.pos_ == 'PROPN' and token.dep_ == 'pobj':
-            candidates.append(token)
-        if token.pos_ == 'PROPN' and token.dep_ == 'compound':
-            compound = compound_recursion(sent, ind, ind+1)
-            candidates.append(compound)
-            ind += len(compound)-1
-        ind += 1
-
->>>>>>> 7f633beb9fce52c9a947c34cdc9a9c48c5a8f4a3
     return candidates
 
 
 def gazetteer_cand(parsed):
     candidates = []
-<<<<<<< HEAD
-=======
-    for chunk in parsed.noun_chunks:
-        if chunk.root.dep_ == 'pobj':
-            if is_gazetteer(chunk):
-                candidates.append(chunk)
->>>>>>> 7f633beb9fce52c9a947c34cdc9a9c48c5a8f4a3
     return candidates
+
 
 def chunk_cand(parsed):
     candidates = []
-<<<<<<< HEAD
-=======
-    for chunk in parsed.noun_chunks:
-        if chunk.root.dep_ == 'pobj':
-            if all([ token.text[0].isupper() for token in chunk ]):
-                candidates.append(chunk)
->>>>>>> 7f633beb9fce52c9a947c34cdc9a9c48c5a8f4a3
     return candidates
 
 
