@@ -1,6 +1,5 @@
-from app.preprocessing import preproc
-from app import gazetteer
-
+from app.preprocessing.preprocessing import preproc
+from app.NER import gazetteer
 
 def isloc(raw, ind, sent, lemma, pos):
 

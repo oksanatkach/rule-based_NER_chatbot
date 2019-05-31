@@ -1,5 +1,6 @@
 import nltk
 import spacy
+from nltk import Tree
 from spacy import displacy
 
 cool_parser = spacy.load('en')
@@ -10,7 +11,6 @@ wnl = nltk.WordNetLemmatizer()
 
 def preproc(text):
     parsed = []
-
     sent_text = nltk.sent_tokenize(text)
     for sent in sent_text:
         tokenized_text = nltk.word_tokenize(sent)
@@ -25,7 +25,7 @@ def cool_preproc(text):
 
 if __name__ == '__main__':
     # Test your stuff.
-    s = 'I am flying to the Great Keep.'
+    s = 'New York'
     print(preproc(s))
     parsed = cool_parser(s)
     displacy.serve(parsed, style='dep')

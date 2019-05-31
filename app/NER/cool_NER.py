@@ -1,6 +1,7 @@
-from app.preprocessing import cool_preproc
-from app import gazetteer
+from app.preprocessing.preprocessing import cool_preproc
+from app.NER import gazetteer
 import spacy
+from app.NER.date_regex import find_date
 
 
 def is_gazetteer(cand):
@@ -11,12 +12,10 @@ def is_gazetteer(cand):
 
 def spacy_cand(parsed):
     candidates = []
-
     for sent in parsed.sents:
         for entity in sent.ents:
             if entity.label_ == 'GPE':
                 candidates.append(entity)
-
     return candidates
 
 
@@ -25,7 +24,7 @@ def rules_cand(sent):
 
     def compound_recursion(sent, init_ind, ind):
         token = sent[ind]
-        if token.pos_ == 'PROPN' and token.dep_ in ['pobj', 'appos']:
+        if token.pos_ == 'PROPN' and token.dep_ in ['pobj', 'appos', 'ROOT']:
             return sent[init_ind:ind+1]
         elif token.pos_ == 'PROPN' and token.dep_ == 'compound':
             return compound_recursion(sent,  init_ind, ind+1)
@@ -46,13 +45,10 @@ def rules_cand(sent):
 
 def gazetteer_cand(parsed):
     candidates = []
-
     for chunk in parsed.noun_chunks:
         if is_gazetteer(chunk):
             candidates.append(chunk)
-
     return candidates
-
 
 def chunk_cand(parsed):
     candidates = []
@@ -74,6 +70,23 @@ def loc_relation(cand):
         return None
 
 
+def get_entity(usr_txt):
+
+    parsed = cool_preproc(usr_txt)
+    gazetteer_cands = gazetteer_cand(parsed)
+    spacy_cands = spacy_cand(parsed)
+    rules_cands = rules_cand(parsed)
+    chunk_cands = chunk_cand(parsed)
+    all_cands = [gazetteer_cands] + \
+                [spacy_cands] + \
+                [rules_cands] + \
+                [chunk_cands]
+
+    for lst in all_cands:
+        if lst:
+            return lst[0]
+
+
 def extract(parsed):
 
     _from = None
@@ -84,7 +97,10 @@ def extract(parsed):
     rules_cands = rules_cand(parsed)
     chunk_cands = chunk_cand(parsed)
 
-    all_cands = [gazetteer_cands] + [spacy_cands] + [rules_cands] + [chunk_cands]
+    all_cands = [gazetteer_cands] + \
+                [spacy_cands] + \
+                [rules_cands] + \
+                [chunk_cands]
 
     for lst in all_cands:
         if lst:
@@ -96,13 +112,15 @@ def extract(parsed):
                 else:
                     continue
 
-    return _from, _to
+    return _from, _to, find_date(parsed.text)
 
 
 if __name__ == '__main__':
     # Test your stuff.
 
-    s1 = 'I am flying from to New York, then to San Francisco'
+    s1 = 'New York'
+    # print(gazetteer_cand(cool_preproc(s1)))
     parsed = cool_preproc(s1)
+    print(get_entity(s1))
 
-    print(chunk_cand(parsed))
+    # print(get_entity(s1))

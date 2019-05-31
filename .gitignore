@@ -4,4 +4,11 @@ __pycache__/
 *.xml
 */.idea/
 .idea/
+app/chatbot/.idea/
+app/preprocessing/.idea/
+app/NER/.idea/
 app/preprocessing/__pycache__/
+app/NER/__pycache__/
+app/chatbot/__pycache__/
+app/__pycache__/
+app/.idea/
