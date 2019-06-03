@@ -53,10 +53,10 @@ def words2date(text):
         return today.strftime("%d, %b %Y")
 
     if "tomorrow" in text:
-        return (today + datetime.timedelta(days=1)).strftime("%d, %b %Y")
+        return (today + datetime.timedelta(days=1)).strftime("%B %d, %Y")
 
     if "in a week" in text:
-        return (today + datetime.timedelta(days=7)).strftime("%d, %b %Y")
+        return (today + datetime.timedelta(days=7)).strftime("%B %d, %Y")
 
     else:
         return None
@@ -65,12 +65,12 @@ def words2date(text):
 def later_date(date):
     now = datetime.datetime.now()
     date_parsed = datetime.datetime.strptime(date, '%B %d, %Y')
-    return now < date_parsed
+    return now <= date_parsed
 
 
 if __name__ == '__main__':
     # Test your stuff.
-    # print(later_date(find_date('June 15, 2019')))
+    print(find_date('tomorrow'))
     # print find_date('There is no date in this sentence.')
     # print find_date('I would like to book a flight on 05/11/2018, please.')
-    print(words2date("in a month"))
+    # print(words2date("in a month"))

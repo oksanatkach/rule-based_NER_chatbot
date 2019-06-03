@@ -1,5 +1,5 @@
 from app.preprocessing.preprocessing import cool_preproc
-from app.NER import gazetteer
+from app import gazetteer
 import spacy
 from app.NER.date_regex import find_date
 
@@ -118,7 +118,7 @@ def extract(parsed):
 if __name__ == '__main__':
     # Test your stuff.
 
-    s1 = 'New York'
+    s1 = 'I want to fly to New York'
     # print(gazetteer_cand(cool_preproc(s1)))
     parsed = cool_preproc(s1)
     print(get_entity(s1))

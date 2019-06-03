@@ -13,8 +13,15 @@ def matches(usr_txt):
         return "Thanks for talking to me."
 
     else:
-        # Default answer when no matches found.
-        return "Human, please employ logic. I don't understand."
+        if re.match(r'.*(hello|hi|yo|good (morning|night|day)|hey there).*', usr_txt.lower()):
+            return hello()
+
+        elif re.match(r'.*(ticket|flight|plane|fly).*', usr_txt.lower()):
+            return flight(usr_txt)
+
+        else:
+            # Default answer when no matches found.
+            return "Human, please employ logic. I don't understand."
 
 
 def hello():
