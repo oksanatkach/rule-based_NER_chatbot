@@ -1,3 +1,6 @@
 import os
+import re
 
-gazetteer = set(open(os.getcwd().replace('/app/NER', '') + '/gazetteers/cities.lst').read().split('\n'))
+path = os.getcwd()
+
+gazetteer = set(open(re.sub(r'/app.*?$', '', path) + '/gazetteers/cities.lst').read().split('\n'))
