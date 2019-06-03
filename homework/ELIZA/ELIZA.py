@@ -19,11 +19,23 @@ reflections = {
 }
 
 psychobabble = [
-
-    [r'quit',
-     ["Thank you for talking with me.",
-      "Good-bye.",
-      "Thank you, that will be $150.  Have a good day!"]]
+    (
+        r'.* ?(I feel) (.*)',
+        [
+            "Why do {} {}?", # the groups in the regex above will be reflected, then inserted in place of {} here;
+                             # if there are no {}, just the string will be returned
+            "Why do you think {} {}?",
+            "Where do yo think those feelings are coming from?"
+        ]
+    ),
+    (
+        r'quit',
+        [
+            "Thank you for talking with me.",
+            "Good-bye.",
+            "Thank you, that will be $150. Have a good day!"
+        ]
+    )
 ]
 
 
